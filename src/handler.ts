@@ -1,6 +1,7 @@
-import { query, AssistantMessage, TextBlock, ClaudeCodeOptions } from "@anthropic-ai/claude-code";
+export {};
+const { query, AssistantMessage, TextBlock, ClaudeCodeOptions } = require("@anthropic-ai/claude-code");
 
-export async function claudeCodeHandler(args: unknown): Promise<{ content: { type: string; text: string; }[]; isError: boolean; }> {
+export async function claudeCodeHandler(args: any) {
     if (typeof args !== 'object' || args === null || !('instructions' in args) || !('working_directory' in args)) {
         return {
             content: [{ type: "text", text: "Invalid arguments provided to claudeCodeHandler." }],
@@ -8,7 +9,7 @@ export async function claudeCodeHandler(args: unknown): Promise<{ content: { typ
         };
     }
 
-    const { instructions, working_directory } = args as { instructions: string; working_directory: string; };
+    const { instructions, working_directory } = args;
 
     try {
         const options = new ClaudeCodeOptions({

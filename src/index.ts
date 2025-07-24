@@ -17,7 +17,7 @@ const child = spawn(node, [scriptPath, ...process.argv.slice(3)], {
   stdio: 'inherit',
 });
 
-child.on('close', (code) => {
+child.on('close', (code: number | null) => {
   if (code !== 0) {
     console.error(`Command ${command} failed with code ${code}`);
     process.exit(1);

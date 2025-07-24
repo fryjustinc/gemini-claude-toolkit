@@ -1,6 +1,5 @@
-import { Tool } from "@modelcontextprotocol/sdk";
-
-export const CLAUDE_CODE_TOOL: Tool = {
+export {};
+export const CLAUDE_CODE_TOOL = {
   name: "claude_code",
   description: "Instructs Claude Code to perform specific code implementation tasks.",
   inputSchema: {
