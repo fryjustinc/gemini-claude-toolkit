@@ -1,9 +1,9 @@
 # Gemini Claude Toolkit
 
-The `gemini-claude-toolkit` is a powerful command-line interface that streamlines the setup of a sophisticated, AI-driven development workflow between Gemini and Claude. It provides two main commands:
+The `@kryonas/gemini-claude-toolkit` is a powerful command-line interface that streamlines the setup of a sophisticated, AI-driven development workflow between Gemini and Claude. It provides two main commands:
 
--   `gemini-claude-init`: Initializes your project with the Gemini-Claude Collaboration Protocol by creating a `gemini.md` file in your current directory.
--   `gemini-claude-server`: Runs an MCP server that allows Gemini to delegate coding tasks to Claude.
+-   `@kryonas/gemini-claude-init`: Initializes your project with the Gemini-Claude Collaboration Protocol by creating a `gemini.md` file in your current directory.
+-   `@kryonas/gemini-claude-server`: Runs an MCP server that allows Gemini to delegate coding tasks to Claude.
 
 ## Prerequisites
 
@@ -26,10 +26,10 @@ This toolkit provides two commands that work together to establish the Gemini-Cl
 
 ### Step 1: Initialize Your Project
 
-To begin, run the `gemini-claude-init` command in the root directory of your project:
+To begin, run the `@kryonas/gemini-claude-init` command in the root directory of your project:
 
 ```bash
-npx gemini-claude-init
+npx @kryonas/gemini-claude-toolkit gemini-claude-init
 ```
 
 This will create a `gemini.md` file in your project. This file contains the instructions that guide Gemini to act as a project architect, collaborating with Claude as the coding implementer.
@@ -46,7 +46,7 @@ Once your project is initialized, you need to configure your Gemini CLI to use t
 
     To make this permanent, add this line to your shell's configuration file (e.g., `~/.zshrc`, `~/.bashrc`).
 
-2.  **Configure Gemini CLI**: Add the `gemini-claude-server` to your Gemini CLI's `settings.json` file. This file is usually located at `~/.gemini/settings.json`.
+2.  **Configure Gemini CLI**: Add the `@kryonas/gemini-claude-server` to your Gemini CLI's `settings.json` file. This file is usually located at `~/.gemini/settings.json`.
 
     ```json
     {
@@ -55,7 +55,7 @@ Once your project is initialized, you need to configure your Gemini CLI to use t
           "name": "gemini-claude-server",
           "spec": {
             "type": "stdio",
-            "command": ["npx", "gemini-claude-server"]
+            "command": ["npx", "@kryonas/gemini-claude-toolkit", "gemini-claude-server"]
           }
         }
       ]
