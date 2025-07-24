@@ -1,0 +1,30 @@
+{
+  "name": "gemini-claude-toolkit",
+  "version": "1.0.0",
+  "description": "A toolkit for Gemini-Claude collaboration, providing an MCP server and initialization command.",
+  "main": "index.js",
+  "bin": {
+    "gemini-claude-server": "server.js",
+    "gemini-claude-init": "init.js"
+  },
+  "scripts": {
+    "build": "bun build ./src/server.ts --outdir ./dist --target node && bun build ./src/init.ts --outdir ./dist --target node",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.7.0",
+    "@anthropic-ai/claude-code": "latest"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "keywords": [
+    "gemini",
+    "mcp",
+    "claude",
+    "collaboration",
+    "toolkit"
+  ],
+  "author": "",
+  "license": "ISC"
+} 
