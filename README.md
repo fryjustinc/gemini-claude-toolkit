@@ -1,83 +1,68 @@
 # Gemini Claude Toolkit
 
-The `@kryonas/gemini-claude-toolkit` is a powerful command-line interface that streamlines the setup of a sophisticated, AI-driven development workflow between Gemini and Claude. It provides two main commands:
+The `@kryonas/gemini-claude-toolkit` is a command-line tool that enables a powerful, collaborative development workflow between the Gemini CLI and Claude. It allows Gemini to act as a high-level project architect, delegating coding tasks to Claude for implementation.
 
--   `@kryonas/gemini-claude-init`: Initializes your project with the Gemini-Claude Collaboration Protocol by creating a `gemini.md` file in your current directory.
--   `@kryonas/gemini-claude-server`: Runs an MCP server that allows Gemini to delegate coding tasks to Claude.
+This toolkit is designed to be used with `npx`, which allows you to run it without a global installation.
 
-## Prerequisites
+## Overview
 
-- **Node.js**: [Download and install Node.js](https://nodejs.org/) (which includes `npx`).
-- **Claude Code CLI**: The official command-line tool for interacting with Claude Code.
-  ```bash
-  npm install -g @anthropic-ai/claude-code
-  ```
-- **Anthropic API Key**: You'll need an API key from Anthropic.
-  1. Go to the [Anthropic Console](https://console.anthropic.com/).
-  2. Create a new API key.
+The workflow is designed to be seamless:
 
-## Installation
+1.  You issue a command to the Gemini CLI in your project.
+2.  Gemini, guided by a `gemini.md` file, formulates a high-level plan.
+3.  Gemini delegates the coding task to a local MCP server provided by this toolkit.
+4.  The server uses the `@anthropic-ai/claude-code` CLI to have Claude generate the code.
+5.  The final code is returned to you in the Gemini CLI.
 
-You can use this toolkit directly with `npx` without needing to install it globally.
+## Getting Started
 
-## Usage
+Follow these steps to set up and use the Gemini Claude Toolkit.
 
-This toolkit provides two commands that work together to establish the Gemini-Claude collaborative workflow.
+### Prerequisites
 
-### Step 1: Initialize Your Project
+Before you begin, make sure you have the following:
 
-To begin, run the `@kryonas/gemini-claude-init` command in the root directory of your project:
+-   **Node.js**: [Download and install Node.js](https://nodejs.org/) (version 18 or higher), which includes `npx`.
+-   **Claude Code CLI**: The official command-line tool for interacting with Claude.
+    ```bash
+    npm install -g @anthropic-ai/claude-code
+    ```
+-   **Anthropic API Key**: You'll need an API key from Anthropic. You can get one from the [Anthropic Console](https://console.anthropic.com/).
+
+### Step 1: Set Your Anthropic API Key
+
+Make your Anthropic API key available as an environment variable.
 
 ```bash
-npx @kryonas/gemini-claude-toolkit gemini-claude-init
+export ANTHROPIC_API_KEY="your-anthropic-api-key"
 ```
 
-This will create a `gemini.md` file in your project. This file contains the instructions that guide Gemini to act as a project architect, collaborating with Claude as the coding implementer.
+To make this setting permanent, add the line to your shell's configuration file (e.g., `~/.zshrc` or `~/.bashrc`).
 
-### Step 2: Configure and Run the MCP Server
+### Step 2: Initialize Your Project
 
-Once your project is initialized, you need to configure your Gemini CLI to use the MCP server provided by this toolkit.
+In the root directory of your project, run the following command:
 
-1.  **Set Your API Key**: Make your Anthropic API key available as an environment variable.
+```bash
+npx @kryonas/gemini-claude-toolkit init
+```
 
-    ```bash
-    export ANTHROPIC_API_KEY="your-anthropic-api-key"
-    ```
+This command creates a `gemini.md` file in your project. This file contains instructions that guide Gemini to act as a project architect, delegating coding tasks to Claude.
 
-    To make this permanent, add this line to your shell's configuration file (e.g., `~/.zshrc`, `~/.bashrc`).
+### Step 3: Configure the Gemini CLI
 
-2.  **Configure Gemini CLI**: Add the `@kryonas/gemini-claude-server` to your Gemini CLI's `settings.json` file. This file is usually located at `~/.gemini/settings.json`.
+You need to tell the Gemini CLI to use the MCP server from this toolkit. Add the following configuration to your Gemini CLI's `settings.json` file (usually located at `~/.gemini/settings.json`):
 
-    ```json
+```json
+{
+  "mcpServers": [
     {
-      "mcpServers": [
-        {
-          "name": "gemini-claude-server",
-          "spec": {
-            "type": "stdio",
-            "command": ["npx", "@kryonas/gemini-claude-toolkit", "gemini-claude-server"]
-          }
-        }
-      ]
+      "name": "gemini-claude-server",
+      "spec": {
+        "type": "stdio",
+        "command": ["npx", "@kryonas/gemini-claude-toolkit", "server"]
+      }
     }
-    ```
-
-### Step 3: Start Collaborating
-
-With your project initialized and the Gemini CLI configured, you are ready to start using the collaborative workflow. When you interact with the Gemini CLI in your project's directory, it will now follow the protocol defined in your `gemini.md` file, delegating coding tasks to Claude via the MCP server.
-
-## Architecture and Workflow
-
-The Gemini Claude Toolkit is designed to facilitate a powerful, collaborative development workflow where Gemini acts as the high-level architect and Claude serves as the dedicated coding assistant. This separation of concerns allows you to focus on the overall structure and design of your project while leveraging Claude's powerful code generation capabilities.
-
-Here's how the different components interact:
-
-1.  **Gemini CLI**: When you issue a command to the Gemini CLI, it first consults the `gemini.md` file in your project's root directory. This file contains a set of instructions, or a "meta-prompt," that directs Gemini to adopt the persona of a project architect. Instead of executing the coding task itself, Gemini's role is to formulate a clear, high-level plan for the task.
-
-2.  **MCP Server**: The `gemini-claude-server` is a local server that implements the Model-to-Model Collaboration Protocol (MCP). When Gemini has formulated a coding plan, it delegates the implementation of that plan to the MCP server. The server acts as a bridge, translating Gemini's high-level instructions into a format that Claude can understand.
-
-3.  **Claude Code**: The MCP server, in turn, invokes the `@anthropic-ai/claude-code` CLI tool. It passes the coding task, as defined by Gemini, to Claude. Claude then generates the necessary code to implement the task and returns it to the MCP server.
-
-4.  **Final Output**: The MCP server sends the code generated by Claude back to the Gemini CLI, which then presents it to you as the final result.
-
-This entire process is designed to be seamless. From your perspective, you are simply interacting with the Gemini CLI. However, in the background, this powerful, multi-model collaboration is taking place, allowing you to leverage the unique strengths of both Gemini and Claude. 
+  ]
+}
+```

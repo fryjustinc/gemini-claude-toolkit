@@ -1,14 +1,13 @@
 {
   "name": "@kryonas/gemini-claude-toolkit",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A toolkit for Gemini-Claude collaboration, providing an MCP server and initialization command.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "bin": {
-    "gemini-claude-server": "dist/server.js",
-    "gemini-claude-init": "dist/init.js"
+    "@kryonas/gemini-claude-toolkit": "dist/index.js"
   },
   "scripts": {
-    "build": "bun build ./src/server.ts --outdir ./dist --target node --external=@modelcontextprotocol/sdk --external=@anthropic-ai/claude-code && bun build ./src/init.ts --outdir ./dist --target node --external=@modelcontextprotocol/sdk --external=@anthropic-ai/claude-code",
+    "build": "bun build ./src/index.ts --outdir ./dist --target node --external=@modelcontextprotocol/sdk --external=@anthropic-ai/claude-code && bun build ./src/server.ts --outdir ./dist --target node --external=@modelcontextprotocol/sdk --external=@anthropic-ai/claude-code && bun build ./src/init.ts --outdir ./dist --target node --external=@modelcontextprotocol/sdk --external=@anthropic-ai/claude-code",
     "prepublishOnly": "npm run build"
   },
   "publishConfig": {
